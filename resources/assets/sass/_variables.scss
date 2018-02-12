@@ -1,0 +1,50 @@
+$font-stack-primary: 'Fira Sans', sans-serif;
+$font-stack-secondary: 'Sofia Pro', 'Roboto', sans-serif;
+
+$input-color: #246;
+$input-border: 1px solid $input-color;
+
+$color-primary: #00C3AF;
+$color-primary-darker: #388089;
+$color-primary-lighter: #1FDCB8;
+$color-primary-lightest: #00EEC1;
+$color-secondary: #303240;
+$color-error: #FD916D;
+$color-error-light: #fd5505;
+$color-text-light: #F7F7F7;
+$color-text-grey-light: #909090;
+$color-text-grey: #474747;
+$color-borders: #CECECE;
+$color-body-borders: #CECECE;
+$color-background-grey: #7A7A7A;
+$color-background-light-grey: #eee;
+$color-background-lighest-grey: #f7f7f7;
+
+$color-bg-bar: white;
+
+$color-growth-positive: #1DC2AF;
+$color-growth-negative: #F95923;
+
+// Pikaday overrides
+$pd-day-hover-bg: $color-primary;
+$pd-day-today-color: $color-secondary;
+$pd-day-selected-bg: $color-secondary;
+$pd-day-selected-shadow: $color-secondary;
+
+
+// If you change these, make sure to sync them with the JS data colors in `js/constants/data-colors.js`!
+$data-color-1: #00EEC1;
+$data-color-2: #303240;
+$data-color-3: #CD2C35;
+$data-color-4: #FBE156;
+$data-color-5: #9825FB;
+$data-color-6: #D5D6FF;
+
+// List to easily loop all available data colors
+$data-colors: $data-color-1 $data-color-2 $data-color-3 $data-color-4 $data-color-5 $data-color-6;
+
+// sizes from BS, https://github.com/twbs/bootstrap/blob/v4-dev/scss/_variables.scss#L205
+$screen-sm: 576px;
+$screen-md: 768px;
+$screen-lg: 992px;
+$screen-xl: 1200px;
