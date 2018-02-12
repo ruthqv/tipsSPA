@@ -91,7 +91,8 @@
               this.$parent.items= response.data.items
 
     		  this.$root.$emit('refresh');
-    		  this.fillItem = ''
+    		  this.formSuccess = 'Thankyou!'
+    		  this.$parent.newItem= ''
               }, (response) => {
                console.log('error createItem')
               this.formErrors = response.data;

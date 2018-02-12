@@ -18,7 +18,7 @@ class CreateTipsTable extends Migration
         {
             $collection->index('question');
             $collection->index('category');
-            $collection->index('solution');
+            $collection->ensureIndex("solution","text");
             $collection->index('approved')->default(0);
             $collection->index('resource')->nullable();
             $collection->index('email')->nullable();
