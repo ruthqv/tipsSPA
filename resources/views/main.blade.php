@@ -9,7 +9,7 @@
 
                         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
                         <link href="{{ asset('css/custom/style.css') }}" rel="stylesheet" type="text/css">
-                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+                         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
                             <title>
@@ -51,6 +51,7 @@
         </section>       
     </div>
         @yield('variables')
+        <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
         <script>
             var currentUserId = {!! json_encode(Auth()->user()['id']) !!};
             var currentUser = {!! json_encode(Auth()->user()) !!};

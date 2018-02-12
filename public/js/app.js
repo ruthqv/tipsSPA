@@ -66465,6 +66465,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Checkditor_vue__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Checkditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Checkditor_vue__);
 //
 //
 //
@@ -66519,6 +66521,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	name: 'CreateTip',
@@ -66542,15 +66549,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 	methods: {
+
 		createItem: function createItem() {
 			var _this = this;
 
+			this.formErrors = '';
 			var input = this.newItem;
 			console.log(this.newItem);
 			this.$http.post('api/tips/tip', input).then(function (response) {
 				_this.$parent.items = response.data.items;
 
 				_this.$root.$emit('refresh');
+				_this.fillItem = '';
 			}, function (response) {
 				console.log('error createItem');
 				_this.formErrors = response.data;
@@ -66563,22 +66573,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			this.$http.post('api/tips/searchcategory/' + category).then(function (response) {
 
-				// if(response.data != ''){
-				$('#categoryselector').show();
-				_this2.availablesCategories = response.data;
+				if (response.data != '') {
+					$('#categoryselector').show();
+					_this2.availablesCategories = response.data;
 
-				console.log(response.data);
-				console.log(_this2.availablesCategories);
-				// this.categoryselected =response.data[0].name
-				// this.newItem.category = this.categoryselected         
+					console.log(response.data);
+					console.log(_this2.availablesCategories);
+					// this.categoryselected =response.data[0].name
+					// this.newItem.category = this.categoryselected         
+				} else {
+					// this.categoryselected = category
+					_this2.newItem.category = category;
+					// console.log(this.categoryselected)
 
-				// }else{
-				//   // this.categoryselected = category
-				//   this.newItem.category = category         
-				//     // console.log(this.categoryselected)
-
-
-				//   }
+				}
 			}, function (response) {
 				console.log('error searchcategory');
 				_this2.formErrors = response.data;
@@ -66601,6 +66609,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			};
 		}
 
+	},
+
+	components: {
+		Checkditor: __WEBPACK_IMPORTED_MODULE_0__Checkditor_vue___default.a
 	}
 });
 
@@ -66731,36 +66743,13 @@ var render = function() {
                             : _vm._e(),
                           _vm._v(" "),
                           index == "solution"
-                            ? _c("textarea", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.newItem[index],
-                                    expression: "newItem[index]"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  placeholder: index,
-                                  cols: "100",
-                                  id: "textareatip",
-                                  name: "index",
-                                  rows: "2",
-                                  type: "text"
-                                },
-                                domProps: { value: _vm.newItem[index] },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.newItem,
-                                      index,
-                                      $event.target.value
-                                    )
-                                  }
+                            ? _c("Checkditor", {
+                                model: {
+                                  value: _vm.newItem[index],
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.newItem, index, $$v)
+                                  },
+                                  expression: "newItem[index]"
                                 }
                               })
                             : _vm._e(),
@@ -66850,7 +66839,8 @@ var render = function() {
                                   : _vm._e()
                               ])
                             : _vm._e()
-                        ]
+                        ],
+                        1
                       )
                     }),
                     _vm._v(" "),
@@ -66944,8 +66934,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -67088,10 +67076,27 @@ var render = function() {
                   _vm._v(_vm._s(row.question))
                 ]),
                 _vm._v(" "),
+                _c("div", { staticClass: "meta" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-text" }, [
+                  _c("p", { domProps: { innerHTML: _vm._s(row.solution) } })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer" }, [
+                row.category
+                  ? _c("span", { staticClass: "float-right" }, [
+                      _vm._v("Category: " + _vm._s(row.category))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
                 _c(
-                  "div",
-                  { staticClass: "meta" },
+                  "span",
                   [
+                    _c("i", {}),
+                    _vm._v(" "),
                     _c(
                       "router-link",
                       {
@@ -67103,27 +67108,7 @@ var render = function() {
                     )
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-text" }, [
-                  _vm._v(
-                    "\n\n\t\t\t\t\t\t    \tSolution:\n\t\t\t\t\t\t\t\t" +
-                      _vm._s(row.solution) +
-                      "\n\n                        "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-footer" }, [
-                _c("span", { staticClass: "float-right" }, [
-                  _vm._v("Category: " + _vm._s(row.category))
-                ]),
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.makeroute(row._id)) +
-                    "\n\n                        "
-                ),
-                _vm._m(0, true)
+                )
               ])
             ])
           ])
@@ -67132,14 +67117,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [_c("i", {})])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -67442,7 +67420,7 @@ var render = function() {
             fn: function(row) {
               return [
                 _c("b-card", [
-                  _c("div", { staticClass: "container" }, [
+                  _c("div", { staticClass: "container text-center" }, [
                     _c("h2", [_vm._v(_vm._s(row.item.question))]),
                     _vm._v(" "),
                     _c("hr"),
@@ -68109,6 +68087,159 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(15)
+/* script */
+var __vue_script__ = __webpack_require__(244)
+/* template */
+var __vue_template__ = __webpack_require__(245)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Tips\\Front\\Elements\\Checkditor.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-34f34c22", Component.options)
+  } else {
+    hotAPI.reload("data-v-34f34c22", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 244 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ckeditor',
+  props: {
+    value: {
+      type: String
+    },
+    id: {
+      type: String,
+      default: 'editor'
+    },
+    height: {
+      type: String,
+      default: '90px'
+    },
+    toolbar: {
+      type: Array
+
+    },
+    language: {
+      type: String,
+      default: 'en'
+    },
+    extraplugins: {
+      type: String,
+      default: ''
+    }
+  },
+  beforeUpdate: function beforeUpdate() {
+    var ckeditorId = this.id;
+    if (this.value !== CKEDITOR.instances[ckeditorId].getData()) {
+      CKEDITOR.instances[ckeditorId].setData(this.value);
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    var ckeditorId = this.id;
+    console.log(this.value);
+    var ckeditorConfig = {
+      toolbar: this.toolbar,
+      language: this.language,
+      height: this.height,
+      extraPlugins: this.extraplugins
+    };
+    CKEDITOR.replace(ckeditorId, ckeditorConfig);
+    CKEDITOR.instances[ckeditorId].setData(this.value);
+    CKEDITOR.instances[ckeditorId].on('change', function () {
+      var ckeditorData = CKEDITOR.instances[ckeditorId].getData();
+      if (ckeditorData !== _this.value) {
+        _this.$emit('input', ckeditorData);
+      }
+    });
+
+    CKEDITOR.instances[ckeditorId].on('focus', function (e) {
+      e.editor.resize('100%', '250', true);
+      console.log('The editor named ' + e.editor.name + ' is now focused');
+    });
+  },
+  destroyed: function destroyed() {
+    var ckeditorId = this.id;
+    if (CKEDITOR.instances[ckeditorId]) {
+      CKEDITOR.instances[ckeditorId].destroy();
+    }
+  }
+});
+
+/***/ }),
+/* 245 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "ckeditor" }, [
+    _c("textarea", { attrs: { id: _vm.id }, domProps: { value: _vm.value } })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-34f34c22", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
